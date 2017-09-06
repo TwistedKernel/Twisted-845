@@ -3148,12 +3148,12 @@ pvm_determine_end_from_reverse(struct vmap_area **va, unsigned long align)
  * to gigabytes.  To avoid interacting with regular vmallocs, these
  * areas are allocated from top.
  *
- * Despite its complicated look, this allocator is rather simple. It
- * does everything top-down and scans free blocks from the end looking
- * for matching base. While scanning, if any of the areas do not fit the
- * base address is pulled down to fit the area. Scanning is repeated till
- * all the areas fit and then all necessary data structures are inserted
- * and the result is returned.
+ * Despite its complicated look, this allocator is rather simple.  It
+ * does everything top-down and scans areas from the end looking for
+ * matching slot.  While scanning, if any of the areas overlaps with
+ * existing vmap_area, the base address is pulled down to fit the
+ * area.  Scanning is repeated till all the areas fit and then all
+ * necessary data structures are inserted and the result is returned.
  */
 struct vm_struct **pcpu_get_vm_areas(const unsigned long *offsets,
 				     const size_t *sizes, int nr_vms,
