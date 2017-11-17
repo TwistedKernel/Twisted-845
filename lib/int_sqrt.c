@@ -23,6 +23,9 @@ unsigned long int_sqrt(unsigned long x)
 		return x;
 
 	m = 1UL << (__fls(x) & ~1UL);
+	while (m > x)
+		m >>= 2;
+
 	while (m != 0) {
 		b = y + m;
 		y >>= 1;
