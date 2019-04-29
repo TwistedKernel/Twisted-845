@@ -7270,6 +7270,7 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 	unsigned int active_cpus_count = 0;
 	int isolated_candidate = -1;
 	int prev_cpu = task_cpu(p);
+	struct task_struct *curr_tsk;
 
 	*backup_cpu = -1;
 
@@ -7584,6 +7585,15 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 	 *   a) ACTIVE CPU: target_cpu
 	 *   b) IDLE CPU: best_idle_cpu
 	 */
+
+	if (target_cpu != -1 && !idle_cpu(target_cpu) &&
+			best_idle_cpu != -1) {
+		curr_tsk = READ_ONCE(cpu_rq(target_cpu)->curr);
+		if (curr_tsk && schedtune_task_boost_rcu_locked(curr_tsk)) {
+			target_cpu = best_idle_cpu;
+		}
+	}
+
 	if (target_cpu == -1)
 		target_cpu = prefer_idle
 			? best_active_cpu
@@ -12142,11 +12152,8 @@ const struct sched_class fair_sched_class = {
 #endif
 #ifdef CONFIG_SCHED_WALT
 	.fixup_walt_sched_stats	= walt_fixup_sched_stats_fair,
-<<<<<<< HEAD
-=======
 	.fixup_cumulative_runnable_avg =
 		walt_fixup_cumulative_runnable_avg_fair,
->>>>>>> 5d68c9016e1424d1e270a935a9114b4a367337eb
 #endif
 };
 
