@@ -30,7 +30,7 @@
 #include <linux/slab.h>
 #include <linux/regulator/consumer.h>
 #include <linux/hwinfo.h>
-#include <linux/workqueue.h>
+#include <linux/kthread.h>
 
 #ifdef CONFIG_DRM
 #include <drm/drm_notifier.h>
@@ -63,7 +63,8 @@ extern int32_t nvt_mp_proc_init(void);
 
 struct nvt_ts_data *ts;
 
-static struct workqueue_struct *nvt_wq;
+static struct kthread_worker nvt_worker;
+static struct task_struct *nvt_worker_thread;
 
 #if BOOT_UPDATE_FIRMWARE
 static struct workqueue_struct *nvt_fwu_wq;
@@ -1119,7 +1120,7 @@ Description:
 return:
 	n.a.
 *******************************************************/
-static void nvt_ts_work_func(struct work_struct *work)
+static void nvt_ts_work_func(struct kthread_work *work)
 {
 	int32_t ret = -1;
 	uint8_t point_data[POINT_DATA_LEN + 1] = {0};
@@ -1275,7 +1276,7 @@ static irqreturn_t nvt_ts_irq_handler(int32_t irq, void *dev_id)
 	if (bTouchIsAwake == 0) {
 		dev_dbg(&ts->client->dev, "%s gesture wakeup\n", __func__);
 	}
-	queue_work(nvt_wq, &ts->nvt_work);
+	kthread_queue_work(&nvt_worker, &ts->nvt_work);
 
 	return IRQ_HANDLED;
 }
@@ -1671,13 +1672,18 @@ static int32_t nvt_ts_probe(struct i2c_client *client, const struct i2c_device_i
 	mutex_unlock(&ts->lock);
 
 	/*---create workqueue---*/
-	nvt_wq = alloc_workqueue("nvt_wq", WQ_HIGHPRI, 0);
-	if (!nvt_wq) {
+	struct sched_param param = { .sched_priority = MAX_RT_PRIO - 2 };
+	kthread_init_worker(&nvt_worker);
+	nvt_worker_thread = kthread_run_perf_critical(kthread_worker_fn,
+		&nvt_worker, "nvt_worker_thread");
+	if (IS_ERR(nvt_worker_thread)) {
 		NVT_ERR("nvt_wq create workqueue failed\n");
 		ret = -ENOMEM;
-		goto err_create_nvt_wq_failed;
+		goto err_create_nvt_worker_failed;
 	}
-	INIT_WORK(&ts->nvt_work, nvt_ts_work_func);
+	sched_setscheduler(nvt_worker_thread, SCHED_FIFO, &param);
+
+	kthread_init_work(&ts->nvt_work, nvt_ts_work_func);
 	/*---allocate input device---*/
 	ts->input_dev = input_allocate_device();
 	if (ts->input_dev == NULL) {
@@ -1897,7 +1903,7 @@ err_int_request_failed:
 err_input_register_device_failed:
 	input_free_device(ts->input_dev);
 err_input_dev_alloc_failed:
-err_create_nvt_wq_failed:
+err_create_nvt_worker_failed:
 	mutex_destroy(&ts->lock);
 err_chipvertrim_failed:
 err_check_functionality_failed:
@@ -2260,8 +2266,7 @@ static void __exit nvt_driver_exit(void)
 {
 	i2c_del_driver(&nvt_i2c_driver);
 
-	if (nvt_wq)
-		destroy_workqueue(nvt_wq);
+	kthread_flush_worker(&nvt_worker);
 
 #if BOOT_UPDATE_FIRMWARE
 	if (nvt_fwu_wq)
