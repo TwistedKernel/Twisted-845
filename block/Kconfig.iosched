@@ -14,7 +14,7 @@ config IOSCHED_NOOP
 
 config IOSCHED_DEADLINE
 	tristate "Deadline I/O scheduler"
-	default y
+	default n
 	---help---
 	  The deadline I/O scheduler is simple and compact. It will provide
 	  CSCAN service with FIFO expiration of requests, switching to
