@@ -1,0 +1,8 @@
+Kernel: Twisted Kernel
+Build Number: B1103
+
+Changelog:
+- Linux 4.9.208
+- Updated SLMK
+- Fixed sched boost logspam
+- Mix2S support (thx Dahake for testing)

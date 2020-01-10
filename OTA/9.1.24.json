@@ -1,0 +1,13 @@
+{
+  "kernel": {
+    "name": "Twisted Kernel",
+    "version": "v16",
+    "link": "https://drive.google.com/uc?export=download&id=1ok2-lI-kC5-9QPCwkfRR07NU3toyQVpN",
+    "changelog_url": "https://raw.githubusercontent.com/TwistedKernel/Twisted-845/master/OTA/changelog",
+    "date": "2020-01-10",
+    "sha1": "a7a929d5355b9be8cca1d838d5547674e7f44ce0"
+  },
+  "support": {
+    "link": "https://t.me/twistedkernel"
+  }
+}

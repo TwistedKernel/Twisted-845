@@ -1,0 +1,13 @@
+{
+  "kernel": {
+    "name": "Twisted Kernel",
+    "version": "v16",
+    "link": "https://github.com/TwistedKernel/Twisted-845/releases/download/16/Twisted-F1-Q-V16-B1103.zip",
+    "changelog_url": "https://raw.githubusercontent.com/TwistedKernel/Twisted-845/master/OTA/changelog",
+    "date": "2020-01-10",
+    "sha1": "9f1cf9d0234a6b1bc2c276b7a21904ba34ee18fe"
+  },
+  "support": {
+    "link": "https://t.me/twistedkernel"
+  }
+}
