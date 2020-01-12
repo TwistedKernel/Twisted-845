@@ -98,12 +98,6 @@ SCHED_FEAT(ENERGY_AWARE, false)
 #endif
 
 /*
- * Enforce the priority of candidates selected by find_best_target()
- * ON: If the target CPU saves any energy, use that.
- * OFF: Use whichever of target or backup saves most.
- */
-SCHED_FEAT(FBT_STRICT_ORDER, false)
-/*
  * Enforce schedtune.prefer_idle to take need_idle path.
  * ON: schedtune.prefer_idle is replaced with need_idle
  * OFF: schedtune.prefer_idle is honored as is.
