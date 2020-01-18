@@ -1,11 +1,11 @@
 {
   "kernel": {
     "name": "Twisted Kernel - Mi8",
-    "version": "17",
+    "version": "18",
     "link": "https://drive.google.com/uc?export=download&id=1d4BYmMeP68_HhRvbJzM1uHQ76pZezfU0",
     "changelog_url": "https://raw.githubusercontent.com/TwistedKernel/Twisted-845/master/OTA/changelog",
-    "date": "2020-01-14",
-    "sha1": "da1c8b416f3ab007792969fe5bbc52450496d54b"
+    "date": "2020-01-18",
+    "sha1": "e6624266273fb745a131bed2f415344dcad0173e"
   },
   "support": {
     "link": "https://t.me/twistedkernel"
