@@ -1156,6 +1156,11 @@ static int dsi_panel_parse_timing(struct device *parent,
 		goto error;
 	}
 
+	if (mode->refresh_rate > 63) {
+		pr_err("failed to apply mdss-dsi-panel-framerate");
+		mode->refresh_rate *= 2;
+	}
+
 	rc = dsi_panel_parse(of_node, fw_entry,
 		"qcom,mdss-dsi-panel-width", &mode->h_active);
 	if (rc) {
