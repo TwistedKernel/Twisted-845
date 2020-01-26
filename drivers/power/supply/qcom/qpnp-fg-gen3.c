@@ -1215,7 +1215,6 @@ static void fg_notify_charger(struct fg_chip *chip)
 		return;
 	}
 
-	/*
 	prop.intval = chip->bp.fastchg_curr_ma * 1000;
 	rc = power_supply_set_property(chip->batt_psy,
 			POWER_SUPPLY_PROP_CONSTANT_CHARGE_CURRENT_MAX, &prop);
@@ -1224,7 +1223,6 @@ static void fg_notify_charger(struct fg_chip *chip)
 			rc);
 		return;
 	}
-	*/
 
 	fg_dbg(chip, FG_STATUS, "Notified charger on float voltage and FCC\n");
 }
@@ -3334,8 +3332,8 @@ static void profile_load_work(struct work_struct *work)
 			chip->batt_id_ohms / 1000, rc);
 		goto out;
 	}
-        /*xiaomi move qcom_step_chg_init to fg driver*/
-        qcom_step_chg_init(chip->dev, 0 , 1);
+	/*xiaomi move qcom_step_chg_init to fg driver*/
+	qcom_step_chg_init(chip->dev, 0, 1);
 
 	if (!chip->profile_available)
 		goto out;
