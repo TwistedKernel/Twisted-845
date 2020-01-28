@@ -1,11 +1,11 @@
 {
   "kernel": {
     "name": "Twisted Kernel - Mix 2S",
-    "version": "18",
+    "version": "19",
     "link": "https://drive.google.com/uc?export=download&id=1gRfXOhVBxdlsyJ6RH6CE8e0XeHVbtxiU",
     "changelog_url": "https://raw.githubusercontent.com/TwistedKernel/Twisted-845/master/OTA/changelog",
-    "date": "2020-01-18",
-    "sha1": "ba9ceae6a856688034e5236f5358a8d7aecd905c"
+    "date": "2020-01-28",
+    "sha1": "dfced89bcf768dcbd14fc1b316a9aace902197ce"
   },
   "support": {
     "link": "https://t.me/twistedkernel"

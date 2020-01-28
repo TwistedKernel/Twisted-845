@@ -1,11 +1,11 @@
 {
   "kernel": {
     "name": "Twisted Kernel - F1",
-    "version": "18",
+    "version": "19",
     "link": "https://drive.google.com/uc?export=download&id=1Tftg0ypFVYuoAkP67o-rWgU7-Na486MH",
     "changelog_url": "https://raw.githubusercontent.com/TwistedKernel/Twisted-845/master/OTA/changelog",
-    "date": "2020-01-18",
-    "sha1": "39e98da1cbb78520e22e6aa5c07d0a523300685f"
+    "date": "2020-01-28",
+    "sha1": "c215fc4d96eb52a48c1b0cdca0cb08bd439d4993"
   },
   "support": {
     "link": "https://t.me/twistedkernel"

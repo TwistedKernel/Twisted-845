@@ -1,3 +1,4 @@
-Twisted Kernel 18.0 B1142 - Q:
-- Updated bluetooth and gpu changes from Xiaomi
-- Clang 11
+Twisted Kernel 19.0 Q: 
+- Linux 4.9.211
+- Upstreamed to CAF LA.UM.8.3.r1-07200-sdm845.0 
+- Removed dynamic fsync
