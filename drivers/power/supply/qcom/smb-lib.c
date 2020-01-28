@@ -45,8 +45,8 @@
 				__func__, ##__VA_ARGS__);	\
 	} while (0)
 
-bool skip_thermal = false;
-module_param(skip_thermal, bool, 0644);
+bool disable_throttle = false;
+module_param(disable_throttle, bool, 0644);
 
 static bool off_charge_flag;
 static void smblib_wireless_set_enable(struct smb_charger *chg, int enable);
@@ -2544,7 +2544,7 @@ static int smblib_therm_charging(struct smb_charger *chg)
 	if (chg->system_temp_level >= MAX_TEMP_LEVEL)
 		return 0;
 
-	if (skip_thermal) {
+	if (disable_throttle) {
 		temp_level = chg->system_temp_level;
 		chg->system_temp_level = 0;
 	}
@@ -2602,7 +2602,7 @@ static int smblib_therm_charging(struct smb_charger *chg)
 				rc);
 	}
 
-	if (skip_thermal) {
+	if (disable_throttle) {
 		chg->system_temp_level = temp_level;
 	}
 
@@ -3413,6 +3413,10 @@ static int smblib_handle_usb_current(struct smb_charger *chg,
 			if (rc < 0)
 				return rc;
 		}
+	} else if (chg->real_charger_type == POWER_SUPPLY_TYPE_USB &&
+		usb_current == -ETIMEDOUT) {
+		rc = vote(chg->usb_icl_votable, USB_PSY_VOTER,
+					true, USBIN_100MA);
 	} else {
 		rc = vote(chg->usb_icl_votable, USB_PSY_VOTER,
 					true, usb_current);

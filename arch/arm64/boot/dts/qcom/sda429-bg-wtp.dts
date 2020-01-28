@@ -12,10 +12,14 @@
  */
 
 /dts-v1/;
-/plugin/;
+
+#include "sdm429-spyro.dtsi"
+#include "sdm429w-bg-pm660.dtsi"
 
 / {
-	model = " SDM450 NOPMI MTP";
-	qcom,board-id = <8 3>;
+	model = "Qualcomm Technologies, Inc. SDM429 QRD DVT Spyro";
+	compatible = "qcom,sdm429w-qrd", "qcom,sdm429w", "qcom,qrd";
+	qcom,msm-id = <437 0x0>;
+	qcom,board-id = <0x00010b 8>;
+	qcom,pmic-id = <0x0002001b 0x0 0x0 0x0>;
 };
-
