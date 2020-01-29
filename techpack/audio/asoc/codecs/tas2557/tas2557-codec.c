@@ -1,7 +1,6 @@
 /*
 ** =============================================================================
 ** Copyright (c) 2016  Texas Instruments Inc.
-** Copyright (C) 2019 XiaoMi, Inc.
 **
 ** This program is free software; you can redistribute it and/or modify it under
 ** the terms of the GNU General Public License as published by the Free Software
@@ -45,6 +44,7 @@
 #include <sound/soc.h>
 #include <sound/initval.h>
 #include <sound/tlv.h>
+#include <soc/qcom/socinfo.h>
 
 #include "tas2557-core.h"
 #include "tas2557-codec.h"
@@ -333,6 +333,8 @@ static int vendor_id_get(struct snd_kcontrol *kcontrol,
 		if (pTAS2557->spk_id_gpio_p)
 			ucontrol->value.integer.value[0] = spk_id_get(pTAS2557->spk_id_gpio_p);
 
+		if (get_hw_version_platform() == HARDWARE_PLATFORM_URSA)
+			ucontrol->value.integer.value[0] = VENDOR_ID_GOER;
 		return 0;
 }
 
