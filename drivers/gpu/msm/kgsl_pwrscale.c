@@ -1027,6 +1027,12 @@ int kgsl_pwrscale_init(struct device *dev, const char *governor)
 	if (profile->max_state == 1)
 		governor = "performance";
 
+	unsigned long max_freq = pwr->pwrlevels[0].gpu_freq;
+
+        if (max_freq > 720000000) {
+		governor = "powersave";
+	}
+
 	/* initialize msm-adreno-tz governor specific data here */
 	data = gpu_profile->private_data;
 

@@ -779,6 +779,12 @@ __power_supply_register(struct device *parent,
 		goto device_add_failed;
 
 	rc = device_init_wakeup(dev, ws);
+
+	if (rc)
+		goto wakeup_init_failed;
+
+	rc = psy_register_thermal(psy);
+
 	if (rc)
 		goto wakeup_init_failed;
 
