@@ -183,6 +183,8 @@ static struct fg_irq_info fg_irqs[FG_IRQ_MAX];
 #ifdef CONFIG_CHARGE_BOOST
 bool charge_boost_enabled = false;
 module_param(charge_boost_enabled, bool, 0644);
+unsigned int charge_boost_trigger = 80;
+module_param(charge_boost_trigger, uint, 0644);
 #endif
 
 #define PARAM(_id, _addr_word, _addr_byte, _len, _num, _den, _offset,	\
@@ -1612,7 +1614,7 @@ out:
 static void fg_cap_learning_update(struct fg_chip *chip)
 {
 	int rc;
-	unsigned int batt_soc, batt_soc_msb, cc_soc_sw;
+	unsigned int batt_soc, batt_soc_msb, cc_soc_sw, msoc;
 	bool input_present = is_input_present(chip);
 	bool prime_cc = false;
 
@@ -1620,10 +1622,15 @@ static void fg_cap_learning_update(struct fg_chip *chip)
 
 #ifdef CONFIG_CHARGE_BOOST
 	if (charge_boost_enabled) {
-	if (chip->charge_status == POWER_SUPPLY_STATUS_CHARGING ||
-	chip->charge_status == POWER_SUPPLY_STATUS_FULL) {
+	if (chip->charge_status == POWER_SUPPLY_STATUS_CHARGING) {
+	rc = fg_get_prop_capacity(chip, &msoc);
+	if (rc < 0) {
+		pr_err("Failed to get msoc, rc=%d\n", rc);
+	}
+	if (msoc >= charge_boost_trigger) {
     	   	cpu_input_boost_kick_max(50000);
 		pr_info("Charge boost kicked in\n");
+        }
 	}
 	}
 #endif
