@@ -4,7 +4,6 @@
  * This code is based on drivers/scsi/ufs/ufshcd.c
  * Copyright (C) 2011-2013 Samsung India Software Operations
  * Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
- * Copyright (C) 2018 XiaoMi, Inc.
  *
  * Authors:
  *	Santosh Yaraganavi <santosh.sy@samsung.com>
@@ -1919,8 +1918,8 @@ static void ufshcd_init_clk_gating(struct ufs_hba *hba)
 	gating->delay_ms_pwr_save = UFSHCD_CLK_GATING_DELAY_MS_PWR_SAVE;
 	gating->delay_ms_perf = UFSHCD_CLK_GATING_DELAY_MS_PERF;
 
-	/* start with power-save mode */
-	gating->delay_ms = gating->delay_ms_pwr_save;
+	/* start with performance mode */
+	gating->delay_ms = gating->delay_ms_perf;
 
 	if (!ufshcd_is_clkscaling_supported(hba))
 		goto scaling_not_supported;
