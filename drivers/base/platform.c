@@ -416,7 +416,7 @@ int platform_device_add(struct platform_device *pdev)
 		pdev->id = PLATFORM_DEVID_AUTO;
 	}
 
-	while (i--) {
+	while (--i >= 0) {
 		struct resource *r = &pdev->resource[i];
 		if (r->parent)
 			release_resource(r);
