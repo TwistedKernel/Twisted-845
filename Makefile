@@ -828,6 +828,8 @@ else
 KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
 endif
 
+KBUILD_CFLAGS += $(call cc-disable-warning, misleading-indentation)
+
 ifeq ($(ld-name),lld)
 KBUILD_LDFLAGS += -O3
 endif
