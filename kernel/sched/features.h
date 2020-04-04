@@ -96,13 +96,6 @@ SCHED_FEAT(ENERGY_AWARE, true)
 #else
 SCHED_FEAT(ENERGY_AWARE, false)
 #endif
-
-/*
- * Enforce schedtune.prefer_idle to take need_idle path.
- * ON: schedtune.prefer_idle is replaced with need_idle
- * OFF: schedtune.prefer_idle is honored as is.
- */
-SCHED_FEAT(EAS_USE_NEED_IDLE, false)
 /*
  * Inflate the effective utilization of SchedTune-boosted tasks, which
  * generally leads to usage of higher frequencies.
