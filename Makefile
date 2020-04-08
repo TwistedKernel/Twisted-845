@@ -663,7 +663,6 @@ LDFLAGS		+= --plugin-opt=O3
 LDFLAGS		+= -plugin-opt=-function-sections
 LDFLAGS		+= -plugin-opt=-data-sections
 LDFLAGS		+= -plugin-opt=new-pass-manager
-LDFLAGS		+= -plugin-opt=mcpu=kryo
 endif
 
 # use llvm-ar for building symbol tables from IR files, and llvm-dis instead
