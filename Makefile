@@ -649,7 +649,6 @@ export CFLAGS_GCOV CFLAGS_KCOV
 ifdef CONFIG_LD_GOLD
 LDFINAL_vmlinux := $(LD)
 LD		:= $(LDGOLD)
-LDFLAGS		+= -O3
 endif
 ifdef CONFIG_LD_LLD
 LD		:= $(LDLLD)
@@ -690,13 +689,7 @@ KBUILD_CFLAGS	+= $(call cc-option,-fdata-sections,)
 endif
 
 ifdef CONFIG_LTO_CLANG
-ifdef CONFIG_THINLTO
-lto-clang-flags := -flto=thin -fsplit-lto-unit
-KBUILD_LDFLAGS += --thinlto-cache-dir=.thinlto-cache
-else
-lto-clang-flags	:= -flto
-endif
-lto-clang-flags += -fvisibility=hidden
+lto-clang-flags	:= -flto -fvisibility=hidden
 
 # allow disabling only clang LTO where needed
 DISABLE_LTO_CLANG := -fno-lto -fvisibility=default
