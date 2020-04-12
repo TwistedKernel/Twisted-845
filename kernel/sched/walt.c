@@ -53,8 +53,8 @@ u64 walt_load_reported_window;
 static struct irq_work walt_cpufreq_irq_work;
 static struct irq_work walt_migration_irq_work;
 
-void
-walt_fixup_cumulative_runnable_avg(struct rq *rq,
+static void
+fixup_cumulative_runnable_avg(struct rq *rq,
 				   struct task_struct *p, u64 new_task_load)
 {
 	s64 task_load_delta = (s64)new_task_load - task_load(p);
@@ -1770,7 +1770,7 @@ static void update_history(struct rq *rq, struct task_struct *p,
 	 */
 	if (!task_has_dl_policy(p) || !p->dl.dl_throttled) {
 		if (task_on_rq_queued(p))
-			p->sched_class->fixup_walt_sched_stats(rq, p, demand,
+			fixup_cumulative_runnable_avg(rq, p, demand,
 							       pred_demand);
 		else if (rq->curr == p)
 			walt_fixup_cum_window_demand(rq, demand);
