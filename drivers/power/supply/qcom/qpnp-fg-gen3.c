@@ -183,7 +183,7 @@ static struct fg_irq_info fg_irqs[FG_IRQ_MAX];
 #ifdef CONFIG_CHARGE_BOOST
 bool charge_boost_enabled = false;
 module_param(charge_boost_enabled, bool, 0644);
-unsigned int charge_boost_trigger = 90;
+unsigned int charge_boost_trigger = 80;
 module_param(charge_boost_trigger, uint, 0644);
 #endif
 
